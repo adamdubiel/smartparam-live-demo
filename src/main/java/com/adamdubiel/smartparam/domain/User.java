@@ -15,7 +15,7 @@
  */
 package com.adamdubiel.smartparam.domain;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -23,23 +23,23 @@ import java.util.Date;
  */
 public class User {
 
-    private final String login;
+    private final UserLogin login;
 
-    private final Date registrationDate;
+    private final LocalDate registrationDate;
 
     private final UserAccountType accountType;
 
-    public User(String login, Date registrationDate, UserAccountType accountType) {
+    public User(UserLogin login, LocalDate registrationDate, UserAccountType accountType) {
         this.login = login;
         this.registrationDate = registrationDate;
         this.accountType = accountType;
     }
 
-    public String login() {
+    public UserLogin login() {
         return login;
     }
 
-    public Date registrationDate() {
+    public LocalDate registrationDate() {
         return registrationDate;
     }
 

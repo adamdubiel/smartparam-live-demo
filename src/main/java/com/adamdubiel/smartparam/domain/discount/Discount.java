@@ -22,9 +22,9 @@ package com.adamdubiel.smartparam.domain.discount;
  */
 public class Discount {
 
-    public long value;
+    private final long value;
 
-    Discount(long value) {
+    public Discount(long value) {
         this.value = value;
     }
 

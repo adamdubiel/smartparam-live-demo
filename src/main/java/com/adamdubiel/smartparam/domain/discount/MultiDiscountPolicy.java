@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adamdubiel.smartparam.domain;
 
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
+package com.adamdubiel.smartparam.domain.discount;
 
 /**
  *
  * @author Adam Dubiel
  */
-public interface DateProvider {
+public interface MultiDiscountPolicy {
 
-    LocalDate currentDate();
+    Discount combine(Discount discountA, Discount discountB);
 
 }

@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adamdubiel.smartparam.domain.discount;
+package com.adamdubiel.smartparam.param;
 
 import com.adamdubiel.smartparam.domain.DateProvider;
 import com.adamdubiel.smartparam.domain.User;
 import com.adamdubiel.smartparam.domain.UserAccountType;
-import org.joda.time.LocalDate;
+import com.adamdubiel.smartparam.domain.UserLogin;
+import java.util.Date;
+import org.smartparam.engine.core.context.DefaultContext;
+import org.smartparam.spring.function.SpringPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,27 +30,32 @@ import org.springframework.stereotype.Service;
  * @author Adam Dubiel
  */
 @Service
-public class CrudeDiscountCalculator implements DiscountCalculator {
+public class LevelCreators {
 
     private final DateProvider dateProvider;
 
     @Autowired
-    public CrudeDiscountCalculator(DateProvider dateProvider) {
+    public LevelCreators(DateProvider dateProvider) {
         this.dateProvider = dateProvider;
     }
 
-    public Discount calculateForUser(User user) {
-        long discountValue = 0;
-        LocalDate today = dateProvider.currentDate();
+    @SpringPlugin("currentDate")
+    public Date currentDate(DefaultContext context) {
+        return dateProvider.currentDate().toDate();
+    }
 
-        if (today.isBefore(new LocalDate(2013, 12, 01))) {
-            if (user.accountType() == UserAccountType.PREMIUM) {
-                discountValue = 15;
-            } else if (user.accountType() == UserAccountType.REGULAR) {
-                discountValue = 5;
-            }
-        }
+    @SpringPlugin("user.login")
+    public UserLogin userLogin(DefaultContext context) {
+        return context.get(User.class).login();
+    }
 
-        return new Discount(discountValue);
+    @SpringPlugin("user.accountType")
+    public String userAccountType(DefaultContext context) {
+        return context.get(User.class).accountType().name();
+    }
+
+    @SpringPlugin("user.registrationDate")
+    public Date userRegitrationDate(DefaultContext context) {
+        return context.get(User.class).registrationDate().toDate();
     }
 }

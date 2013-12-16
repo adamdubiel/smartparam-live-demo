@@ -13,17 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adamdubiel.smartparam.domain;
+package com.adamdubiel.smartparam.param.type;
 
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
+import com.adamdubiel.smartparam.domain.UserLogin;
+import org.smartparam.engine.core.type.AbstractHolder;
 
 /**
  *
  * @author Adam Dubiel
  */
-public interface DateProvider {
+public class UserLoginHolder extends AbstractHolder {
 
-    LocalDate currentDate();
+    private final UserLogin userLogin;
+
+    UserLoginHolder(UserLogin userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    @Override
+    public UserLogin getValue() {
+        return userLogin;
+    }
+
+    @Override
+    public String getString() {
+        return userLogin.value();
+    }
 
 }

@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adamdubiel.smartparam.domain;
 
+package com.adamdubiel.smartparam;
+
+import com.adamdubiel.smartparam.domain.DateProvider;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,17 @@ import org.springframework.stereotype.Service;
  *
  * @author Adam Dubiel
  */
-public interface DateProvider {
+@Service("testDateProvider")
+public class TestDateProvider implements DateProvider {
 
-    LocalDate currentDate();
+    private LocalDate servedDate;
 
+    @Override
+    public LocalDate currentDate() {
+        return servedDate;
+    }
+
+    public void servedDate(int year, int month, int day) {
+        this.servedDate = new LocalDate(year, month, day);
+    }
 }

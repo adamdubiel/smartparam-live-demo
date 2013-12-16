@@ -13,17 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.adamdubiel.smartparam.domain.discount;
 
 import com.adamdubiel.smartparam.domain.User;
+import org.smartparam.engine.core.ParamEngine;
+import org.smartparam.engine.core.context.DefaultContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Adam Dubiel
  */
-public interface DiscountCalculator {
+@Service
+public class DiscountCalculator {
 
-    Discount calculateForUser(User user);
+    private final ParamEngine paramEngine;
+
+    @Autowired
+    public DiscountCalculator(ParamEngine paramEngine) {
+        this.paramEngine = paramEngine;
+    }
+
+    public Discount calculateForUser(User user) {
+        Discount loyaltyDiscount = paramEngine.get("discount.loyalty", new DefaultContext(user)).get();
+        Discount targetedDiscount = paramEngine.get("discount.targeted", new DefaultContext(user)).get();
+
+        return (Discount) paramEngine.callEvaluatedFunction("discount.policy", new DefaultContext(user), loyaltyDiscount, targetedDiscount);
+    }
 
 }

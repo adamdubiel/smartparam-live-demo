@@ -13,17 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adamdubiel.smartparam.domain;
+package com.adamdubiel.smartparam.param.type;
 
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
+import com.adamdubiel.smartparam.domain.discount.Discount;
+import org.smartparam.engine.core.type.AbstractHolder;
 
 /**
  *
  * @author Adam Dubiel
  */
-public interface DateProvider {
+public class DiscountHolder extends AbstractHolder {
 
-    LocalDate currentDate();
+    private final Discount discount;
+
+    DiscountHolder(Discount discount) {
+        this.discount = discount;
+    }
+
+    @Override
+    public Discount getValue() {
+        return discount;
+    }
+
+    @Override
+    public String getString() {
+        return discount != null ? null : Long.toString(discount.value());
+    }
+
+    @Override
+    public long longValue() {
+        return discount.value();
+    }
 
 }

@@ -13,17 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.adamdubiel.smartparam.domain;
 
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
+package com.adamdubiel.smartparam;
+
+import com.adamdubiel.smartparam.config.RootContext;
+import com.adamdubiel.smartparam.domain.DateProvider;
+import org.mockito.Mockito;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  *
  * @author Adam Dubiel
  */
-public interface DateProvider {
+@Configuration
+@Import(value = RootContext.class)
+public class TestContext {
 
-    LocalDate currentDate();
+    @Bean
+    public DateProvider dateProvider() {
+        return Mockito.mock(DateProvider.class);
+    }
 
 }

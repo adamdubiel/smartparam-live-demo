@@ -16,11 +16,17 @@
 
 package com.adamdubiel.smartparam.domain.discount;
 
+import org.smartparam.engine.annotated.annotations.JavaPlugin;
+
 /**
  *
  * @author Adam Dubiel
  */
-public interface DiscountCalculationPolicy {
+public class SumMultiDiscountPolicy implements MultiDiscountPolicy {
 
+    @JavaPlugin("discount.policy.sum")
+    public Discount combine(Discount discountA, Discount discountB) {
+        return new Discount(discountA.value() + discountB.value());
+    }
 
 }
