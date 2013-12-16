@@ -17,7 +17,6 @@ package com.adamdubiel.smartparam.param;
 
 import com.adamdubiel.smartparam.domain.DateProvider;
 import com.adamdubiel.smartparam.domain.User;
-import com.adamdubiel.smartparam.domain.UserAccountType;
 import com.adamdubiel.smartparam.domain.UserLogin;
 import java.util.Date;
 import org.smartparam.engine.core.context.DefaultContext;
