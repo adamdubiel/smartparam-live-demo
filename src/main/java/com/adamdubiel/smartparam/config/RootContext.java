@@ -21,8 +21,7 @@ import org.smartparam.engine.config.ParamEngineFactory;
 import org.smartparam.engine.core.ParamEngine;
 import org.smartparam.engine.core.parameter.ParamRepository;
 import org.smartparam.repository.fs.ClasspathParamRepository;
-import org.smartparam.spring.function.SpringFunctionInvoker;
-import org.smartparam.spring.function.SpringFunctionRepository;
+import org.smartparam.spring.SpringModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +45,7 @@ public class RootContext {
         ParamRepository repository = new ClasspathParamRepository("/param", ".*\\.param$");
         ParamEngineConfig engineConfig = ParamEngineConfigBuilder.paramEngineConfig()
                 .withAnnotationScanEnabled("org.smartparam.spring", "com.adamdubiel.smartparam.param", "com.adamdubiel.smartparam.domain.discount")
-                .withFunctionInvoker(SpringFunctionRepository.FUNCTION_TYPE, new SpringFunctionInvoker(applicationContext))
+                .registerModule(new SpringModule(applicationContext))
                 .withParameterRepositories(repository).build();
         return ParamEngineFactory.paramEngine(engineConfig);
     }

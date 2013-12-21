@@ -16,7 +16,6 @@
 package com.adamdubiel.smartparam.domain;
 
 import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
 
 /**
  *
