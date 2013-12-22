@@ -16,13 +16,13 @@
 package com.adamdubiel.smartparam.param.type;
 
 import com.adamdubiel.smartparam.domain.discount.Discount;
-import org.smartparam.engine.core.type.AbstractHolder;
+import org.smartparam.engine.core.type.AbstractValueHolder;
 
 /**
  *
  * @author Adam Dubiel
  */
-public class DiscountHolder extends AbstractHolder {
+public class DiscountHolder extends AbstractValueHolder {
 
     private final Discount discount;
 

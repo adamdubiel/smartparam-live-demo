@@ -17,33 +17,32 @@ package com.adamdubiel.smartparam.param.type;
 
 import com.adamdubiel.smartparam.domain.discount.Discount;
 import org.smartparam.engine.annotated.annotations.ParamType;
-import org.smartparam.engine.core.type.Type;
+import org.smartparam.engine.core.type.AbstractType;
 
 /**
  *
  * @author Adam Dubiel
  */
 @ParamType("discount")
-public class DiscountType implements Type<DiscountHolder> {
+public class DiscountType extends AbstractType<Discount, DiscountHolder> {
 
-    public String encode(DiscountHolder holder) {
-        return holder.getString();
+    public DiscountType() {
+        super(Discount.class);
     }
 
-    public DiscountHolder decode(String text) {
+    @Override
+    protected DiscountHolder createEmptyHolder() {
+        return new DiscountHolder(null);
+    }
+
+    @Override
+    protected DiscountHolder createHolder(Discount value) {
+        return new DiscountHolder(value);
+    }
+
+    @Override
+    protected DiscountHolder decodeHolder(String text) {
         return new DiscountHolder(new Discount(Long.parseLong(text)));
-    }
-
-    public DiscountHolder convert(Object obj) {
-        if (obj != null && Discount.class.isAssignableFrom(obj.getClass())) {
-            return new DiscountHolder((Discount) obj);
-        }
-
-        if (obj == null) {
-            return new DiscountHolder(null);
-        }
-
-        throw new IllegalArgumentException("conversion not supported for: " + obj.getClass());
     }
 
     public DiscountHolder[] newArray(int size) {

@@ -17,37 +17,27 @@ package com.adamdubiel.smartparam.param.type;
 
 import com.adamdubiel.smartparam.domain.UserLogin;
 import org.smartparam.engine.annotated.annotations.ParamType;
-import org.smartparam.engine.core.type.Type;
+import org.smartparam.engine.core.type.SimpleType;
 
 /**
  *
  * @author Adam Dubiel
  */
 @ParamType("userLogin")
-public class UserLoginType implements Type<UserLoginHolder> {
+public class UserLoginType extends SimpleType<UserLogin> {
 
-    public String encode(UserLoginHolder holder) {
-        return holder.getString();
+    public UserLoginType() {
+        super(UserLogin.class);
     }
 
-    public UserLoginHolder decode(String text) {
-        return new UserLoginHolder(new UserLogin(text));
+    @Override
+    protected String encodeValue(UserLogin userLogin) {
+        return userLogin.value();
     }
 
-    public UserLoginHolder convert(Object obj) {
-        if (obj != null && UserLogin.class.isAssignableFrom(obj.getClass())) {
-            return new UserLoginHolder((UserLogin) obj);
-        }
-
-        if (obj == null) {
-            return new UserLoginHolder(null);
-        }
-
-        throw new IllegalArgumentException("conversion not supported for: " + obj.getClass());
-    }
-
-    public UserLoginHolder[] newArray(int size) {
-        return new UserLoginHolder[size];
+    @Override
+    protected UserLogin decodeValue(String text) {
+        return new UserLogin(text);
     }
 
 }
